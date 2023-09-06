@@ -14,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
 
 body {
   background: ${(props) => props.theme["blue-800"]};
+  color: ${(props) => props.theme.white};
 }
 
 body, input, textarea, button {
