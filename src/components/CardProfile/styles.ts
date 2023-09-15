@@ -12,6 +12,7 @@ export const Card = styled.div`
 	box-shadow: 0px 2px 28px 0px rgba(0, 0, 0, 0.2);
 
 	margin-top: -80px;
+	margin-bottom: 4.5rem;
 `;
 
 export const CardContent = styled.div`
@@ -50,6 +51,11 @@ export const CardHeader = styled.span`
 		font-weight: 700;
 		color: ${(props) => props.theme.blue};
 		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+			text-underline-offset: 5px;
+		}
 	}
 `;
 
