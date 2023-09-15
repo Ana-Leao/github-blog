@@ -1,4 +1,5 @@
 import { CardProfile } from "../../components/CardProfile";
+import { Header } from "../../components/Header";
 import { BlogContainer, CardPost, InputSearchPost, PostContainer } from "./styles";
 
 const posts = [
@@ -30,27 +31,29 @@ const posts = [
 
 export function Blog() {
   return (
-    <BlogContainer>
-      <CardProfile />
-      <div className="searchPosts">
-        <label htmlFor="search">Publicações</label>
-        <span>{posts.length} publicações</span>
-      </div>
-      <InputSearchPost type="text" name="search" id="search"  placeholder="Buscar conteúdo"/>
-      <PostContainer>
-        {posts.map((post) => {
-          return (
-            <CardPost key={post.id}>
-              <div className="titlePost">
-                <strong>{post.title}</strong>
-                <span>{post.createdAt}</span>
-              </div>
-              <p>{post.content}</p>
-            </CardPost>
-          )
-        })}
-      </PostContainer>
-
-    </BlogContainer>
+    <>
+      <Header />
+      <BlogContainer>
+        <CardProfile />
+        <div className="searchPosts">
+          <label htmlFor="search">Publicações</label>
+          <span>{posts.length} publicações</span>
+        </div>
+        <InputSearchPost type="text" name="search" id="search" placeholder="Buscar conteúdo" />
+        <PostContainer>
+          {posts.map((post) => {
+            return (
+              <CardPost key={post.id}>
+                <div className="titlePost">
+                  <strong>{post.title}</strong>
+                  <span>{post.createdAt}</span>
+                </div>
+                <p>{post.content}</p>
+              </CardPost>
+            )
+          })}
+        </PostContainer>
+      </BlogContainer>
+    </>
   );
 }
