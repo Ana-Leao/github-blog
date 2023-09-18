@@ -18,7 +18,7 @@ export const Card = styled.div`
 export const CardContent = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	/* justify-content: space-between; */
 	padding: 2rem;
 	gap: 2rem;
 

@@ -1,35 +1,34 @@
+import { formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 import { CardProfile } from "../../components/CardProfile";
 import { Header } from "../../components/Header";
 import { BlogContainer, CardPost, InputSearchPost, PostContainer } from "./styles";
+import { useEffect, useState } from "react";
 
-const posts = [
-  {
-    id: 1,
-    title: 'JavaScript data types and data structures',
-    content: 'Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.',
-    createdAt: 'Há 1 dia',
-  },
-  {
-    id: 2,
-    title: 'JavaScript data types and data structures',
-    content: 'Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.',
-    createdAt: 'Há 1 dia',
-  },
-  {
-    id: 3,
-    title: 'JavaScript data types and data structures',
-    content: 'Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.',
-    createdAt: 'Há 1 dia',
-  },
-  {
-    id: 4,
-    title: 'JavaScript data types and data structures',
-    content: 'Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.',
-    createdAt: 'Há 1 dia',
-  }
-];
+interface IIssue {
+  id: number;
+  title: string;
+  created_at: string;
+  body: string;
+}
 
 export function Blog() {
+  const [issues, setIssues] = useState<IIssue[]>([]);
+
+  async function getIssues() {
+    //api.github.com/repos/rocketseat-education/reactjs-github-blog-challenge/issues
+    //https://api.github.com/repos/diego3g/rsxp-2023/issues
+    const reponse = await fetch("https://api.github.com/repos/rocketseat-education/reactjs-github-blog-challenge/issues");
+    const data = await reponse.json();
+
+    setIssues(data);
+    console.log(data);
+  }
+
+  useEffect(() => {
+    getIssues();
+  }, []);
+
   return (
     <>
       <Header />
@@ -37,18 +36,21 @@ export function Blog() {
         <CardProfile />
         <div className="searchPosts">
           <label htmlFor="search">Publicações</label>
-          <span>{posts.length} publicações</span>
+          <span>{issues.length} publicações</span>
         </div>
         <InputSearchPost type="text" name="search" id="search" placeholder="Buscar conteúdo" />
         <PostContainer>
-          {posts.map((post) => {
+          {issues.map((issue) => {
             return (
-              <CardPost key={post.id}>
+              <CardPost key={issue.id}>
                 <div className="titlePost">
-                  <strong>{post.title}</strong>
-                  <span>{post.createdAt}</span>
+                  <strong>{issue.title}</strong>
+                  <span>{formatDistanceToNow(new Date(issue.created_at), {
+                    addSuffix: true,
+                    locale: ptBR,
+                  })}</span>
                 </div>
-                <p>{post.content}</p>
+                <p>{issue.title}</p>
               </CardPost>
             )
           })}
